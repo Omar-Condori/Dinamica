@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinámica de Sistemas en la Ingeniería de Sistemas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        main {
+            background: white;
+            border-radius: 20px 20px 0 0;
+            margin-top: -20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        .card {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .concept-card {
+            background: linear-gradient(145deg, #ffffff, #f1f3f4);
+            border-radius: 15px;
+            padding: 2rem;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .concept-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .concept-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .app-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .app-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .app-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .result-item {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+        }
+        
+        .result-percentage {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .pros, .cons {
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        
+        .pros {
+            background: linear-gradient(145deg, #d4edda, #c3e6cb);
+            border-left: 5px solid #28a745;
+        }
+        
+        .cons {
+            background: linear-gradient(145deg, #fff3cd, #ffeaa7);
+            border-left: 5px solid #ffc107;
+        }
+        
+        .pros h3, .cons h3 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .quote {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 6rem;
+            position: absolute;
+            top: -1rem;
+            left: 2rem;
+            opacity: 0.3;
+        }
+        
+        .quote p {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .quote cite {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                padding-left: 2rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transform-origin: 0%;
+            transform: scaleX(0);
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#introduccion">Introducción</a>
+                <a href="#historia">Historia</a>
+                <a href="#conceptos">Conceptos</a>
+                <a href="#aplicaciones">Aplicaciones</a>
+                <a href="#ejemplo">Ejemplo</a>
+                <a href="#resultados">Resultados</a>
+                <a href="#conclusion">Conclusión</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Dinámica de Sistemas</h1>
+            <p>Una aproximación fundamental para comprender y modelar sistemas complejos en la Ingeniería de Sistemas</p>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <section id="introduccion" class="section">
+                <h2 class="section-title">¿Qué es la Dinámica de Sistemas?</h2>
+                <div class="card">
+                    <p>La Dinámica de Sistemas es una metodología para comprender y abordar problemas complejos que surgen en sistemas dinámicos. Se enfoca en las interrelaciones entre sus componentes, los bucles de retroalimentación y las demoras que influyen en el comportamiento a lo largo del tiempo.</p>
+                    <p>No se trata solo de modelar; es una forma de pensamiento que ayuda a visualizar las consecuencias no intencionadas de nuestras decisiones y a diseñar intervenciones más efectivas.</p>
+                </div>
+            </section>
+
+            <section id="historia" class="section">
+                <h2 class="section-title">Historia y Precedentes Clave</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>Década de 1950</h3>
+                        <p>El nacimiento de la Dinámica de Sistemas de la mano de Jay Forrester en el MIT. Su enfoque inicial fue modelar el comportamiento empresarial.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Pioneros del Campo</h3>
+                        <p>Obras seminales como Industrial Dynamics, Urban Dynamics y World Dynamics extendieron la aplicación a problemas sociales y ambientales.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>1972: El Club de Roma</h3>
+                        <p>El informe Los Límites del Crecimiento, un estudio pionero utilizando la Dinámica de Sistemas para simular tendencias globales y advertir sobre la sostenibilidad.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conceptos" class="section">
+                <h2 class="section-title">Conceptos Fundamentales</h2>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h3>Variables: Stocks y Flujos</h3>
+                        <p>Los stocks son acumulaciones (como el número de usuarios o el dinero en una cuenta), y los flujos son las tasas que los cambian (tasa de adquisición de usuarios, ingresos).</p>
+                    </div>
+                    <div class="concept-card">
+                        <h3>Retroalimentación</h3>
+                        <p><strong>Positiva:</strong> crecimiento exponencial o declive.<br>
+                        <strong>Negativa:</strong> estabilización, búsqueda de metas.<br>
+                        Clave para entender el comportamiento del sistema.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h3>Demoras (Delays)</h3>
+                        <p>Retardos en la transmisión de información o material, que a menudo generan oscilaciones o comportamientos contraintuitivos en los sistemas.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h3>Diagramas</h3>
+                        <p><strong>Causales:</strong> relaciones causa-efecto y bucles.<br>
+                        <strong>De Flujo:</strong> representación de stocks, flujos y auxiliares para simulación.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="aplicaciones" class="section">
+                <h2 class="section-title">Aplicaciones en Ingeniería de Sistemas</h2>
+                <div class="applications-grid">
+                    <div class="app-card">
+                        <h3>Gestión de Proyectos</h3>
+                        <p>Modelar la interacción entre recursos, calidad, plazos y complejidad en proyectos de software para evitar sobrecostos y retrasos.</p>
+                    </div>
+                    <div class="app-card">
+                        <h3>Transformación Digital</h3>
+                        <p>Analizar la adopción tecnológica, resistencia al cambio y el impacto en la cultura organizacional.</p>
+                    </div>
+                    <div class="app-card">
+                        <h3>Ciberseguridad</h3>
+                        <p>Estudiar la dinámica entre amenazas, vulnerabilidades, inversión en defensa y el impacto de ataques.</p>
+                    </div>
+                    <div class="app-card">
+                        <h3>Cadena de Suministro</h3>
+                        <p>Optimizar inventarios, prever la demanda y gestionar interrupciones para asegurar eficiencia y resiliencia.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ejemplo" class="section">
+                <h2 class="section-title">Ejemplo de Aplicación</h2>
+                <div class="card">
+                    <h3>Propuesta de formación guiada con dinámica de sistemas</h3>
+                    <p><strong>Autor:</strong> Urbano E. Gómez-Prada<br>
+                    <strong>Institución:</strong> Universidad Pontificia Bolivariana, Bucaramanga, Colombia</p>
+                    
+                    <div class="quote">
+                        <p>"Cada persona tiene una comprensión conceptual, una representación del modelo mental, donde, según el conocimiento que se tenga del sistema, servirá o no, como aproximación de la realidad."</p>
+                    </div>
+
+                    <h4>La Dinámica de Sistemas para el Modelado Semántico</h4>
+                    <div class="concepts-grid">
+                        <div class="concept-card">
+                            <h3>Lenguaje de la Prosa</h3>
+                            <p>Descripción del sistema en lenguaje natural para identificar variables y relaciones clave.</p>
+                        </div>
+                        <div class="concept-card">
+                            <h3>Lenguaje de las Influencias</h3>
+                            <p>Esquema visual de las interrelaciones entre variables, mostrando ciclos de retroalimentación.</p>
+                        </div>
+                        <div class="concept-card">
+                            <h3>Lenguaje de Flujo-Nivel</h3>
+                            <p>Representación detallada usando elementos como flujos, niveles y auxiliares.</p>
+                        </div>
+                        <div class="concept-card">
+                            <h3>Lenguaje de las Ecuaciones</h3>
+                            <p>Formulación matemática de las relaciones para simular el comportamiento.</p>
+                        </div>
+                    </div>
+
+                    <h4>Casos de Estudio</h4>
+                    <ol>
+                        <li><strong>Movimiento Rectilíneo Uniformemente Acelerado:</strong> Para reforzar conceptos básicos.</li>
+                        <li><strong>Oferta y Demanda:</strong> Simula el equilibrio de mercado y fluctuaciones de precios.</li>
+                        <li><strong>Producción Bovina:</strong> Representa una finca con procesos de producción y comercialización.</li>
+                        <li><strong>Integración:</strong> Unifica los modelos anteriores destacando la importancia de la asociatividad.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="resultados" class="section">
+                <h2 class="section-title">Resultados Clave</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <span class="result-percentage">38%</span>
+                        <h3>Modelo Fenómeno Físico</h3>
+                        <p>Mejora en la comprensión de los estudiantes</p>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-percentage">29%</span>
+                        <h3>Modelo Oferta y Demanda</h3>
+                        <p>Incremento en el entendimiento del equilibrio de mercado</p>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-percentage">23%</span>
+                        <h3>Modelo Producción Bovina</h3>
+                        <p>Avance significativo en la complejidad de los sistemas productivos</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Impactos en el Diseño de Software (UML)</h3>
+                    <p>Los estudiantes que aplicaron la metodología diseñaron diagramas UML más completos:</p>
+                    <ul>
+                        <li>Más interrelaciones en diagramas de casos de uso y actividades</li>
+                        <li>Más atributos y métodos en diagramas de clases</li>
+                        <li>Mayor trazabilidad organizacional</li>
+                        <li>Mejor reutilización de ecuaciones y modelos</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Ventajas y Limitaciones</h2>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3>✅ Ventajas</h3>
+                        <ul>
+                            <li><strong>Visión Sistémica:</strong> Permite ver el bosque, no solo los árboles</li>
+                            <li><strong>Simulación de Escenarios:</strong> Probar políticas sin riesgo</li>
+                            <li><strong>Toma de Decisiones Estratégicas:</strong> Identifica puntos de apalancamiento</li>
+                            <li><strong>Comunicación Mejorada:</strong> Comprensión compartida entre equipos</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3>⚠️ Limitaciones</h3>
+                        <ul>
+                            <li><strong>Complejidad:</strong> Construcción laboriosa, requiere experiencia</li>
+                            <li><strong>Necesidad de Datos:</strong> Requiere datos precisos para calibración</li>
+                            <li><strong>Riesgo de Simplificación:</strong> Puede no capturar la complejidad real</li>
+                            <li><strong>Curva de Aprendizaje:</strong> Dominar el pensamiento sistémico toma tiempo</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Tendencias Actuales y Futuro</h2>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h3>Integración con Big Data e IA</h3>
+                        <p>Combinar datos masivos y capacidad predictiva de IA con la visión sistémica para modelos más precisos.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h3>Nuevas Aplicaciones</h3>
+                        <p>Expansión a Smart Cities, optimización energética, gestión de sistemas de salud y modelado frente al cambio climático.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h3>Educación y Pensamiento Sistémico</h3>
+                        <p>Énfasis en enseñar el pensamiento sistémico desde edades tempranas para abordar desafíos interconectados.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conclusion" class="section">
+                <h2 class="section-title">Conclusión</h2>
+                <div class="quote">
+                    <p>"La causa de muchos de nuestros problemas está en cómo gestionamos los sistemas que hemos creado."</p>
+                    <cite>— Jay W. Forrester</cite>
+                </div>
+                
+                <div class="card">
+                    <p>La Dinámica de Sistemas no es solo una herramienta, es una forma de pensar. Para los ingenieros de sistemas, docentes y gestores, adquirir esta perspectiva es crucial para diseñar soluciones sostenibles y comprender las complejidades intrínsecas de nuestro mundo interconectado.</p>
+                    
+                    <p>Nos capacita para trascender las soluciones superficiales y abordar las causas raíz de los problemas, construyendo sistemas más robustos y adaptativos.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling para los enlaces de navegación
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Indicador de progreso de scroll
+        window.addEventListener('scroll', function() {
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height);
+            scrollIndicator.style.transform = `scaleX(${scrolled})`;
+        });
+
+        // Animación de entrada para las tarjetas
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplicar animación a las tarjetas
+        document.querySelectorAll('.card, .concept-card, .app-card, .result-item').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
